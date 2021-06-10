@@ -1,0 +1,16 @@
+click==7.1.2
+configparser==4.0.2
+contextlib2==0.6.0.post1
+Flask==1.1.4
+Flask-SQLAlchemy==2.5.1
+importlib-metadata==2.1.1
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+MySQL-python==1.2.5
+pathlib2==2.3.5
+scandir==1.10.0
+six==1.16.0
+SQLAlchemy==1.4.17
+Werkzeug==1.0.1
+zipp==1.2.0
