@@ -23,7 +23,7 @@ def aboutpage():
 @home.route('/contact')
 def contactpage():
     """
-    Render the homepage template on the / route
+    Render the homepage template on the /contact route
     """
     return render_template('home/contact.html', title="Contact")
 
