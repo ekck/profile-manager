@@ -16,7 +16,7 @@ def homepage():
 @home.route('/about')
 def aboutpage():
     """
-    Render the about template on the /about route
+    Render the aboutpage template on the /about route
     """
     return render_template('home/about.html', title="About")
 

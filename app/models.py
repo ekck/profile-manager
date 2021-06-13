@@ -21,10 +21,12 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(60), index=True)
     second_name = db.Column(db.String(60), index=True)
     last_name = db.Column(db.String(60), index=True)
+    birthdate = db.Column(db.DateTime)
     gender = db.Column(db.String(10), index=True)
     password_hash = db.Column(db.String(128))
     country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
     province_id = db.Column(db.Integer, db.ForeignKey('provinces.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
     is_admin = db.Column(db.Boolean, default=False)
 
     @property
@@ -82,9 +84,9 @@ class Province(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
-    country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
-    countries = db.relationship('Country', backref='province',
-                                lazy='dynamic')
+    country_id = db.Column(db.Integer, db.ForeignKey('countries.id'),
+        nullable=False)
+    countries = db.relationship('Country', backref='province')
 
     def __repr__(self):
         return '<Province: {}>'.format(self.name)
@@ -97,9 +99,9 @@ class Status(db.Model):
     __tablename__ = 'status'
 
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(60), unique=True)
+    status = db.Column(db.String(60), unique=True, default="Active")
     description = db.Column(db.String(200))
-    users = db.relationship('Users', backref='status',
+    users = db.relationship('User', backref='status',
                                 lazy='dynamic')
 
     def __repr__(self):
