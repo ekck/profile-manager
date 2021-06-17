@@ -2,6 +2,7 @@
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timedelta
 
 from app import db, login_manager
 
@@ -21,13 +22,12 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(60), index=True)
     second_name = db.Column(db.String(60), index=True)
     last_name = db.Column(db.String(60), index=True)
-    birthdate = db.Column(db.DateTime)
-    gender = db.Column(db.String(10), index=True)
     password_hash = db.Column(db.String(128))
-    country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
-    province_id = db.Column(db.Integer, db.ForeignKey('provinces.id'))
-    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
     is_admin = db.Column(db.Boolean, default=False)
+    country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
+    create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    update_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     @property
     def password(self):
@@ -75,21 +75,6 @@ class Country(db.Model):
         return '<Country: {}>'.format(self.name)
 
 
-class Province(db.Model):
-    """
-    Create a Province table
-    """
-
-    __tablename__ = 'provinces'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True)
-    country_id = db.Column(db.Integer, db.ForeignKey('countries.id'),
-        nullable=False)
-    countries = db.relationship('Country', backref='province')
-
-    def __repr__(self):
-        return '<Province: {}>'.format(self.name)
 
 class Status(db.Model):
     """

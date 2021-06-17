@@ -12,15 +12,10 @@ class RegistrationForm(FlaskForm):
     Form for users to create new account
     """
     email = StringField('Email', validators=[DataRequired(), Email()])
-    username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     second_name = StringField('Second Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    gender = StringField('gender', validators=[DataRequired()])
-    country = StringField('Country', validators=[DataRequired()])
-    province = StringField('Province', validators=[DataRequired()])
-    birthdate = StringField('Birthdate', validators=[DataRequired()])
-
+    username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[
                                         DataRequired(),
                                         EqualTo('confirm_password')
