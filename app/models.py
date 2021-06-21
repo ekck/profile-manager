@@ -24,18 +24,10 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(60), index=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
-    country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
-    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_date = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     date_of_birth = db.Column(db.DateTime)
-    title = db.column(db.String(5))
-    contact = db.relationship('User', backref='contacts',
-                                lazy='dynamic')
-    dependants = db.relationship('User', backref='dependants',
-                                    lazy='dynamic')
-
-
+ 
     
 
     @property
@@ -79,8 +71,6 @@ class Countries(db.Model):
     name = db.Column(db.String(60), unique=True)
     m49_code = db.Column(db.Integer, unique=True)
     iso_alpha3 = db.Column(db.String(5), unique=True)
-    users = db.relationship('User', backref='country',
-                                lazy='dynamic')
     postal = db.relationship('Contacts', backref='country',
                                 lazy='dynamic')
 
@@ -100,8 +90,7 @@ class Status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, default="Active")
     description = db.Column(db.String(200))
-    status = db.relationship('Status', backref='user',
-                                lazy='dynamic')
+    
 
     def __repr__(self):
         return '<Status: {}>'.format(self.name) 
@@ -120,7 +109,7 @@ class Contacts(db.Model):
     town = db.Column(db.String(20), nullable=False)
     county = db.Column(db.String(20), nullable=False)
     country_id = db.Column(db.Integer, db.ForeignKey('countries.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
     
     def __repr__(self):
         return '<Contact: {}>'.format(self.phone_number) 
@@ -138,12 +127,10 @@ class Dependants(db.Model):
     second_name = db.Column(db.String(60), index=True)
     last_name = db.Column(db.String(60), index=True)
     date_of_birth = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
     
     
     def __repr__(self):
-        return '<Dependants: {}>'.format(self.relationship) 
-
-
+        return '<Dependant: {}>'.format(self.relationship)
 
 

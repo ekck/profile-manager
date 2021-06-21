@@ -1,8 +1,11 @@
 # app/auth/forms.py
 
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import PasswordField, StringField, SubmitField, ValidationError
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, DateField
 from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.fields import DateField
+
+
 
 from ..models import User
 
@@ -21,7 +24,13 @@ class RegistrationForm(FlaskForm):
                                         EqualTo('confirm_password')
                                         ])
     confirm_password = PasswordField('Confirm Password')
+    country = StringField('Country of Origin', validators=[DataRequired()])
+    date_of_birth = DateField(id='datepick')
+    phone_number = StringField('Phone Number', validators=[DataRequired()])
+    marital_status = StringField('Marital Status', validators=[DataRequired()])
+    identiication = StringField('Upload ID', validators=[DataRequired()])
     submit = SubmitField('Register')
+    
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
@@ -38,5 +47,4 @@ class LoginForm(FlaskForm):
     """
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    recaptcha = RecaptchaField()
     submit = SubmitField('Login')

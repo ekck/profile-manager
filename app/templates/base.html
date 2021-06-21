@@ -6,6 +6,7 @@
     <title>{{ title }} | UNHCR</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
     
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}">
@@ -37,6 +38,18 @@
                    <li><a href="#">Countries</a></li>
                 {% else %}
                 <li><a href="{{ url_for('home.dashboard') }}">Dashboard</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="{{ url_for('profile.register') }}">Register Dependants</a></li>
+                    <li><a href="{{ url_for('profile.contact') }}">My Contacts</a></li>
+                    <li><a href="#">Edit Profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Account</li>
+                    <li><a href="#">Reset Password</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
                 {% endif %}
                 <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                 <li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>
@@ -45,22 +58,9 @@
             <li><a href="{{ url_for('auth.register') }}">Register</a></li>
               <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                 {% endif %}
-                
-                  <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
-    
+
                  
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                      <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li class="dropdown-header">Nav header</li>
-                      <li><a href="#">Separated link</a></li>
-                      <li><a href="#">One more separated link</a></li>
-                    </ul>
-                  </li>
+               
                   <li><a href="{{ url_for('home.aboutpage') }}">About</a></li>
                   <!-- <li><a href="#">News</a></li> -->
                   <li><a href="{{ url_for('home.contactpage') }}">Contact</a></li>
@@ -103,5 +103,16 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+  $(function () {
+    
+    $('#datepick').datetimepicker({
+      format: 'LD'
+  });
+  });
+  </script>
+	
 </body>
 </html>
