@@ -15,7 +15,7 @@ def register():
     """
     form = DependantsForm()
     if form.validate_on_submit():
-        user = User(relationship=form.relationship.data,
+        dependant = Dependant(relationship=form.relationship.data,
                     first_name=form.first_name.data,
                     second_name=form.second_name.data,
                     last_name=form.last_name.data,
@@ -27,12 +27,13 @@ def register():
         flash('You have successfully registered a dependant!')
 
         # redirect to the login page
-        return redirect(url_for('profile.registerdependant'))
+        return redirect(url_for('profile.register'))
 
     # load registration template
     return render_template('profile/register.html', form=form, title='RegisterDependant')
 
 @profile.route('/contact', methods=['GET', 'POST'])
+@login_required
 def contact():
     """
     Handle requests to the /register route
@@ -53,10 +54,17 @@ def contact():
         flash('You have successfully add you contacts!')
 
         # redirect to the login page
-        return redirect(url_for('profile.contacts'))
+        return redirect(url_for('profile.contact'))
 
     # load registration template
     return render_template('profile/contact.html', form=form, title='RegisterContacts')
 
+@profile.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    
+    
+    return render_template('profile/user.html', user=user, title='MyProfile')
 
 

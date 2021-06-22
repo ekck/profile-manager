@@ -1,13 +1,15 @@
 # app/auth/forms.py
 
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, DateField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, DateField, IntegerField, RadioField
 from wtforms.validators import DataRequired, Email, EqualTo
-from wtforms.fields import DateField
+from wtforms.fields import DateField, SelectFieldBase, FileField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 
 
 from ..models import User
+
 
 
 class RegistrationForm(FlaskForm):
@@ -24,11 +26,12 @@ class RegistrationForm(FlaskForm):
                                         EqualTo('confirm_password')
                                         ])
     confirm_password = PasswordField('Confirm Password')
-    country = StringField('Country of Origin', validators=[DataRequired()])
+    country = QuerySelectField(label='Country of Origin',query_factory=lambda: User.query.order_by(User.first_name).all())
     date_of_birth = DateField(id='datepick')
-    phone_number = StringField('Phone Number', validators=[DataRequired()])
-    marital_status = StringField('Marital Status', validators=[DataRequired()])
-    identiication = StringField('Upload ID', validators=[DataRequired()])
+    phone_number = IntegerField('Phone Number', validators=[DataRequired()])
+    marital_status = RadioField('Marital Status', choices=[('value','description'),('value_two','whatever')])
+    identification = FileField(label='Upload ID photo',)
+    
     submit = SubmitField('Register')
     
 
