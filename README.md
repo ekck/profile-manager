@@ -19,6 +19,6 @@ $ flask run
 
  migration
 
-$ flask db stamp head //incase of target db not up to date error 
-$ flask db migrate
-$ flask db upgrade
+- $ flask db stamp head //incase of target db not up to date error 
+- $ flask db migrate
+- $ flask db upgrade
