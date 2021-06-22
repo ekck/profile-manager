@@ -15,3 +15,10 @@ $ export ALLOWED_EXTENSIONS={'PDF','JPG','PNG'}
 $ flask run
  * Serving Flask app "run"
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+
+ migration
+
+$ flask db stamp head //incase of target db not up to date error 
+$ flask db migrate
+$ flask db upgrade
