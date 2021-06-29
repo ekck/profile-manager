@@ -1,6 +1,6 @@
 # app/profiles/forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, ValidationError
+from wtforms import StringField, SubmitField, ValidationError, DateField
 from wtforms.validators import DataRequired, Email
 
 from ..models import User
@@ -12,7 +12,7 @@ class DependantsForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     second_name = StringField('Second Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    date_of_birth = StringField('Date of Birth', validators=[DataRequired()])
+    date_of_birth = DateField(id='datepick')
     submit = SubmitField('Register')
 
 class ContactsForm(FlaskForm):

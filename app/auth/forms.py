@@ -1,14 +1,14 @@
 # app/auth/forms.py
 
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, DateField, IntegerField, RadioField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, DateField, IntegerField, HiddenField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms.fields import DateField, SelectFieldBase, FileField
+from wtforms.fields.html5 import DateField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 
-
-from ..models import User
+from ..models import User, Country
 
 
 
@@ -26,11 +26,18 @@ class RegistrationForm(FlaskForm):
                                         EqualTo('confirm_password')
                                         ])
     confirm_password = PasswordField('Confirm Password')
-    country = QuerySelectField(label='Country of Origin',query_factory=lambda: User.query.order_by(User.first_name).all())
-    date_of_birth = DateField(id='datepick')
+    country = StringField('Country')
+    """
+    country = QuerySelectField('Country of Origin',query_factory=countries, validators=[DataRequired()]) 
+    """
+    date_of_birth = DateField('Date Of Birth', format='%Y-%m-%d', validators=[DataRequired()])
     phone_number = IntegerField('Phone Number', validators=[DataRequired()])
-    marital_status = RadioField('Marital Status', choices=[('value','description'),('value_two','whatever')])
-    identification = FileField(label='Upload ID photo',)
+    box_number = IntegerField('P.O Box')
+    postal_code = IntegerField('Postal Code')
+    town = StringField('Town/City')
+    county = StringField('County/Province')
+    id_no = IntegerField('ID/Passport Number', validators=[DataRequired()])
+    
     
     submit = SubmitField('Register')
     
@@ -43,6 +50,14 @@ class RegistrationForm(FlaskForm):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username is already in use.')
 
+    def validate_id(self, field):
+        if User.query.filter_by(id_no=field.data).first():
+            raise ValidationError('ID is already in use.')
+
+    
+        
+
+    
 
 class LoginForm(FlaskForm):
     """

@@ -2,6 +2,7 @@
 
 from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
+from datetime import datetime
 
 from . import auth
 from forms import LoginForm, RegistrationForm
@@ -22,7 +23,16 @@ def register():
                     second_name=form.second_name.data,
                     last_name=form.last_name.data,
                     username=form.username.data,
-                    password=form.password.data)
+                    password=form.password.data,
+                    country=form.country.data,
+                    date_of_birth=form.date_of_birth.data.strftime('%Y-%m-%d'),
+                    phone_number=form.phone_number.data,
+                    box_number=form.box_number.data,
+                    postal_code=form.postal_code.data,
+                    town=form.town.data,
+                    county=form.county.data,
+                    id_no=form.id_no.data,
+                    user_id=datetime.now().strftime("%-y%m%d%H%M%S"))
 
         # add user to the database
         db.session.add(user)

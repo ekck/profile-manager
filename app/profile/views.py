@@ -5,7 +5,7 @@ from flask_login import login_required
 from . import profile
 from forms import DependantsForm, ContactsForm
 from .. import db
-from ..models import User
+
 
 @profile.route('/registerdependant', methods=['GET', 'POST'])
 def register():
@@ -13,6 +13,7 @@ def register():
     Handle requests to the /register route
     Add a user to the database through the registration form
     """
+   
     form = DependantsForm()
     if form.validate_on_submit():
         dependant = Dependant(relationship=form.relationship.data,
@@ -30,7 +31,7 @@ def register():
         return redirect(url_for('profile.register'))
 
     # load registration template
-    return render_template('profile/register.html', form=form, title='RegisterDependant')
+    return render_template('profile/contact.html', form=form, title='RegisterDependant')
 
 @profile.route('/contact', methods=['GET', 'POST'])
 @login_required
@@ -51,7 +52,7 @@ def contact():
         # add contact to the database
         db.session.add(contact)
         db.session.commit()
-        flash('You have successfully add you contacts!')
+        flash('You have successfully added you contacts!')
 
         # redirect to the login page
         return redirect(url_for('profile.contact'))
